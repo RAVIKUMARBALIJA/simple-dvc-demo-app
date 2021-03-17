@@ -20,9 +20,9 @@ dvc add .\datagiven\wineqality.csv
 
 git add .
 
-git config --global user.mail bravikumar123@hotmail.com
+git config --global user.mail ****************
 
-git config --global user.name RAVIKUMARBALIJA
+git config --global user.name ***************
 
 git commit -m "first commit"
 
