@@ -42,5 +42,10 @@ write get_data
 write load_data - to load raw data
 write dvc.yaml - dvc run -n stages - tedius
 
+dvc.yaml
 dvc repro
+
+split_data.py
+
+dvc.yaml
 
