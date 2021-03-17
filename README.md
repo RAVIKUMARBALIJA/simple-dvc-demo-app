@@ -48,4 +48,8 @@ dvc repro
 split_data.py
 
 dvc.yaml
+dvc repro
+train_and_evaludate.py
+
+dvc.yaml
 
