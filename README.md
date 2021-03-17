@@ -25,3 +25,9 @@ git config --global user.mail bravikumar123@hotmail.com
 git config --global user.name RAVIKUMARBALIJA
 
 git commit -m "first commit"
+
+update readme now
+
+git add .
+
+git commit -m "update readme"
