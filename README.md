@@ -31,3 +31,9 @@ update readme now
 git add .
 
 git commit -m "update readme"
+
+git remote add origin repo_link
+git branch -M main
+
+git push -u origin main
+
