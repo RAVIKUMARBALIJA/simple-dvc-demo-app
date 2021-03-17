@@ -37,3 +37,10 @@ git branch -M main
 
 git push origin main
 
+update params.yaml
+write get_data
+write load_data - to load raw data
+write dvc.yaml - dvc run -n stages - tedius
+
+dvc repro
+
