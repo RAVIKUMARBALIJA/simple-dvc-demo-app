@@ -10,6 +10,7 @@ import sys
 import pandas as pd
 import pickle
 import numpy as np
+import json
 
 
 def eval_metrics(actual,predicted):
@@ -51,6 +52,24 @@ def train_and_eval(config_path):
     print(f"rmse : {rmse}")
     print(f"MAE : {mae}")
     print(f"r2 score : {r2}")
+
+    scores_file = config["reports"]["scores"]
+    params_file = config["reports"]["params"]
+
+    with open(scores_file,"w") as f1:
+        scores ={
+            "rmse": rmse,
+            "mae": mae,
+            "r2": r2
+        }
+        json.dump(scores,f1,indent=4)
+    
+    with open(params_file,"w") as f2:
+        params={
+            "alpha": alpha_1,
+            "l1_ratio": l1_ratio_1
+        }
+        json.dump(params,f2,indent=4)
     
     os.makedirs(model_dir,exist_ok=True)
     #with os.path.join(model_dir,"elasticnet.pkl") as f:

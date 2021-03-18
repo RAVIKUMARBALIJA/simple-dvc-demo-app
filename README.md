@@ -53,3 +53,7 @@ train_and_evaludate.py
 
 dvc.yaml
 
+dvc metrics show
+dvc metrics diff
+
+
