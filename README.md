@@ -56,4 +56,25 @@ dvc.yaml
 dvc metrics show
 dvc metrics diff
 
+tox command  - tox
+
+for rebuilding -
+'''bash
+tox -r
+
+pyetst command
+'''bash
+pytest -v
+
+setup commands
+'''bash
+
+pip install -e .
+
+build  your own package commands-
+'''bash
+python setup.py sdist wheel
+
+pip install jupyterlab
+jupyter-lab notesbooks 
 
