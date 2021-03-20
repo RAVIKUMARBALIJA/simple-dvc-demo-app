@@ -73,8 +73,18 @@ pip install -e .
 
 build  your own package commands-
 '''bash
-python setup.py sdist wheel
+python setup.py sdist wheel - to create a package for app
 
 pip install jupyterlab
 jupyter-lab notesbooks 
+
+
+conda activate windoweq
+   2 & "C:/Users/Poornima T/.conda/envs/windoweq/p... 
+   pytest -v
+   4 tox
+   5 tox
+   7 notepad setup.py
+   8 pip install -e .
+   9 pip freeze
 
