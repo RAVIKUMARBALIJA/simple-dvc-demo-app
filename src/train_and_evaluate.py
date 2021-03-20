@@ -56,7 +56,7 @@ def train_and_eval(config_path):
     scores_file = config["reports"]["scores"]
     params_file = config["reports"]["params"]
 
-    with open(scores_file,"w") as f1:
+    with open(sc ores_file,"w") as f1:
         scores ={
             "rmse": rmse,
             "mae": mae,
