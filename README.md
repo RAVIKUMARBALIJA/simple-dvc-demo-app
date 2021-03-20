@@ -73,7 +73,7 @@ pip install -e .
 
 build  your own package commands-
 '''bash
-python setup.py sdist wheel - to create a package for app
+python setup.py sdist bdist wheel - to create a package for app
 
 pip install jupyterlab
 jupyter-lab notesbooks 
