@@ -54,9 +54,9 @@ def validate_input(dict_req):
         if not(schema[col]["min"] <= float(dict_req[col]) <= schema[col]["max"]):
             raise NotInRange
     
-    for col,values in dict_req.items():
+    for col,val in dict_req.items():
         _validate_cols(col)
-        _validate_values(col,values)
+        _validate_values(col,val)
     
     return True
 
