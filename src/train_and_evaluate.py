@@ -11,7 +11,8 @@ import pandas as pd
 import pickle
 import numpy as np
 import json
-
+import mlflow
+from urllib.parse import urlparse
 
 def eval_metrics(actual,predicted):
     rmse = np.sqrt(mean_squared_error(actual,predicted))
@@ -40,19 +41,52 @@ def train_and_eval(config_path):
 
     train_x=train_set[x_cols]
     test_x=test_set[x_cols]
+    
+    ############## MLFLOW ##########
+    
+    mlflow_config = config["mlflow_config"]
+    #mlflow_artifacts = mlflow_config["artifacts_dir"]
+    remote_server_uri = mlflow_config["remote_server_uri"]
+    #mlflow_experiment_name = mlflow_config["experiment_name"]
+    
+    mlflow.set_tracking_uri(remote_server_uri)
+    mlflow.set_experiment(mlflow_config["experiment_name"])
+    
+    with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
+        lr = ElasticNet(alpha=alpha_1,l1_ratio=l1_ratio_1,random_state=random_state_1)
+        lr.fit(train_x, train_y)
 
-    lr = ElasticNet(alpha=alpha_1,l1_ratio=l1_ratio_1,random_state=random_state_1)
-    lr.fit(train_x, train_y)
+        predicted_qualities = lr.predict(test_x)
 
-    predicted_qualities = lr.predict(test_x)
+        (rmse,mae,r2) = eval_metrics(test_y,predicted_qualities)
 
-    (rmse,mae,r2) = eval_metrics(test_y,predicted_qualities)
+        print("Elastic model metrics")
+        print(f"rmse : {rmse}")
+        print(f"MAE : {mae}")
+        print(f"r2 score : {r2}")
+        
+        mlflow.log_param("alpha",alpha_1)
+        mlflow.log_param("l1_ratio",l1_ratio_1)
+        mlflow.log_metric("rmse", rmse)
+        mlflow.log_metric("mae", mae)
+        mlflow.log_metric("r2_score", r2)
+        
+        tracking_url_type_store = urlparse(mlflow.get_artifact_uri()).scheme
+        
+        if tracking_url_type_store != "file":
+            mlflow.sklearn.log_model(
+                lr,
+                "model",
+                registered_model_name=mlflow_config["registered_model_name"]
+            )
+        else:
+            mlflow.sklearn.log_model(
+                lr,
+                "model"
+            )
 
-    print("Elastic model metrics")
-    print(f"rmse : {rmse}")
-    print(f"MAE : {mae}")
-    print(f"r2 score : {r2}")
-
+#commented below for mlflow
+"""
     scores_file = config["reports"]["scores"]
     params_file = config["reports"]["params"]
 
@@ -78,7 +112,7 @@ def train_and_eval(config_path):
 
     joblib.dump(lr, model_path)
 
-
+"""
 if __name__ ==  "__main__":
     args = argparse.ArgumentParser()
     args.add_argument("--config",default='params.yaml')
