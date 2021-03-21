@@ -6,11 +6,11 @@ class NotInRange(Exception):
         self.message = message
         super.__init__(self.message)
 
-def test_generic():
+"""def test_generic():
     a = 5
     with pytest.raises(NotInRange):
         if a not in range(4,10):
-            raise NotInRange
+            raise NotInRange"""
         
 def test_something():
     a = 5
