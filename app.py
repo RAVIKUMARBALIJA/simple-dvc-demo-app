@@ -3,6 +3,7 @@ import os
 import yaml
 import joblib
 import numpy as np
+from prediction_service import prediction
 
 params_path = "params.yaml"
 webapp_root = "webapp"
@@ -12,6 +13,7 @@ template_dir = os.path.join(webapp_root, "templates")
 
 app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 
+"""
 def read_params(config_path):
     with open(config_path) as yaml_file:
         config = yaml.safe_load(yaml_file)
@@ -36,26 +38,32 @@ def api_response(request):
         print(e)
         error = {"error": "Something went wrong!! Try again"}
         return error
-
+"""
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         try:
             if request.form:
-                data = dict(request.form).values()
-                print(dict(request.form))
-                print(data)
-                data = [list(map(float, data))]
-                response = predict(data)
+                #data = dict(request.form).values()
+                #print(dict(request.form))
+                dict_req = dict(request.form)
+                print(dict_req)
+                #print(data)
+                #data = [list(map(float, data))]
+                #response = predict(data)
+                response = prediction.form_response(dict_req)
                 return render_template("index.html", response=response)
 
             elif request.json:
-                response = api_response(request)
+                print(request.json)
+                response = prediction.api_response(request.json)
                 return jsonify(response)
 
         except Exception as e:
             print(e)
-            error = {"error": "Something went wrong!! Try again"}
+            error_msg = {"error": "Something went wrong!! Try again"}
+            print(error_msg)
+            error = {"error":e}
             return render_template("404.html", error=error)
     else:
         return render_template("index.html")
