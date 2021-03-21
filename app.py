@@ -43,6 +43,8 @@ def index():
         try:
             if request.form:
                 data = dict(request.form).values()
+                print(dict(request.form))
+                print(data)
                 data = [list(map(float, data))]
                 response = predict(data)
                 return render_template("index.html", response=response)
